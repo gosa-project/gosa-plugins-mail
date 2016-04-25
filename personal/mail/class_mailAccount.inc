@@ -649,12 +649,57 @@ class mailAccount extends plugin
     return($vct); 
   }
 
+  /**
+   * \brief Check that adding a forward address won't create a loop.
+   *
+   * Consider the case that you create a foward to someone who have
+   * already setup a forward to you. Based on the mail servers configuration
+   * you may end up in a mail forward loop.
+   *
+   * So we try to detect this case and avoid it.
+   * \param $address - The new forwarder address you want to add
+   * \return string - empty string is okay otherwise the conflicting mail address will be returned
+   */
+  function check_forwarder_loop($address, $ldap){
+    $ldap->cd($this->config->current['BASE']);
+    // query the mails forwarding addresses where we want to forward to
+    $ldap->search('(mail='.$address.')', array('mail','gosaMailForwardingAddress'));
+
+    if($ldap->count() > 0){
+      // mail should be unique so we just need the first hit if available
+      $result = $ldap->fetch();
+
+      // foreach forward check it against $this->mail
+      // if not check that the forwarding mail hasn't any forwards that could reach our $this->mail
+      if(isset($result['gosaMailForwardingAddress']['count'])){
+        for($i = 0; $i < $result['gosaMailForwardingAddress']['count']; $i++){
+          $forward = $result['gosaMailForwardingAddress'][$i];
+          if($forward === $this->mail){
+            return $result['mail'][0];
+          }
+          $conflict_mail = $this->check_forwarder_loop($forward, $this->config->get_ldap_link());
+          if($conflict_mail !== ''){
+            return $conflict_mail;
+          }
+        }
+      }
+    }
+
+    return '';
+  }
 
   /*! \brief  Adds the given mail address to the list of mail forwarders 
    */ 
   function addForwarder($address)
   {
     if(empty($address)) return;
+    $conflict = $this->check_forwarder_loop($address, $this->config->get_ldap_link());
+    
+    if($conflict !== ''){
+      msg_dialog::display(_("Loop detected"), _("The user with the e-mail address <b>".$conflict."</b> forwards to you. That would result in a loop."), ERROR_DIALOG);
+      return;
+    }
+
     if($this->acl_is_writeable("gosaMailForwardingAddress")){
       $this->gosaMailForwardingAddress[]= $address;
       $this->gosaMailForwardingAddress= array_unique ($this->gosaMailForwardingAddress);
