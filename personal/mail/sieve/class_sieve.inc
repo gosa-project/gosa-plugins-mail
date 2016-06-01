@@ -566,7 +566,13 @@ class sieve
               "<b>SIEVE: TLS couldn't be initiated. </b>");
           $this->error_raw = "fputs() returned 'false'"; return (false);
         } 
+        
         @ $linha = fgets ($this->fp, 1024); 
+
+        while(sieve::status($linha) == F_DATA){
+          $linha=fgets($this->fp,1024);
+        }
+
         if ($linha === false) {
           $this->error_raw = "fgets() returned 'false'"; 
           @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"couldn't read data from socket.",
