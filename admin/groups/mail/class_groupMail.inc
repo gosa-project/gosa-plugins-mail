@@ -393,9 +393,9 @@ class mailgroup extends plugin
                 }
             }
         }
-        if (isset($_POST['delete_forwarder'])){
-            $this->delForwarder($_POST['forwarder_list']);
-	}
+        if (isset($_POST['delete_forwarder']) && isset($_POST['forwarder_list'])){
+          $this->delForwarder ($_POST['forwarder_list']);
+        }
 
 
         /****************
@@ -432,7 +432,7 @@ class mailgroup extends plugin
             }
         }
         if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
-            $this->delAlternate (get_post('alternates_list'));
+            $this->delAlternate ($_POST['alternates_list']);
         }
 
 
