@@ -525,7 +525,7 @@ class sieve
           "<b>SIEVE: List scripts was successful!</b>");
       return true;
     }else{
-      $this->error=EC_NOSCRIPTS;	//sieve::getresponse has no way of telling wether a script was found...
+      $this->error=EC_NOSCRIPTS;	//sieve::getresponse has no way of telling whether a script was found...
       $this->error_raw="No scripts found for this account.";
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, $this->error_raw,
           "<b>SIEVE: List scripts returned no scripts</b>");
