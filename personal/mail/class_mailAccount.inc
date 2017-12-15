@@ -1366,7 +1366,7 @@ class mailAccount extends plugin
    */
   function init_multiple_support($attrs,$all)
   {
-    plugin::__constructit_multiple_support($attrs,$all);
+    plugin::init_multiple_support($attrs,$all);
     if(isset($this->multi_attrs['gosaMailQuota'])){
       $this->gosaMailQuota = $this->multi_attrs['gosaMailQuota'];
     }
