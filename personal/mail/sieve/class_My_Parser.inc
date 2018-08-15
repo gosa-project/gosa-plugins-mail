@@ -42,7 +42,8 @@ class My_Parser extends Parser
 		$this->registeredExtensions_ = array();
         $this->status_text = "incomplete";
         $this->script_ = $script;
-        $this->tree_ = new My_Tree(@Scanner::scriptStart(),$this);
+        $scanner_start = @Scanner::scriptStart();
+        $this->tree_ = new My_Tree($scanner_start,$this);
         $this->tree_->setDumpFunc(array(&$this, 'dumpToken_'));
         $this->scanner_ = new My_Scanner($this->script_);
         $this->scanner_->setCommentFunc(array($this, 'comment_'));
