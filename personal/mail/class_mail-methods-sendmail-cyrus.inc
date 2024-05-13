@@ -21,38 +21,34 @@
 class mailMethodSendmailCyrus extends mailMethodCyrus
 {
 
-  public function fixAttributesOnLoad()
-  {
-    /* Remove possible local alias from forwarders */
-    mailMethodCyrus::fixAttributesOnLoad();
-    if(isset($this->parent->attrs['gosaMailForwardingAddress'])){
-      $newForwarder= array();
-      for($i = 0; $i < $this->parent->attrs['gosaMailForwardingAddress']['count']; $i++){
-        $addr = $this->parent->attrs['gosaMailForwardingAddress'][$i];
-        if (!preg_match('/^\\\\/', $addr)){
-          $newForwarder[]= $addr;
+    public function fixAttributesOnLoad()
+    {
+        /* Remove possible local alias from forwarders */
+        mailMethodCyrus::fixAttributesOnLoad();
+        if (isset($this->parent->attrs['gosaMailForwardingAddress'])) {
+            $newForwarder = array();
+            for ($i = 0; $i < $this->parent->attrs['gosaMailForwardingAddress']['count']; $i++) {
+                $addr = $this->parent->attrs['gosaMailForwardingAddress'][$i];
+                if (!preg_match('/^\\\\/', $addr)) {
+                    $newForwarder[] = $addr;
+                }
+            }
+            $newForwarder['count'] = count($newForwarder);
+            $this->parent->attrs['gosaMailForwardingAddress'] = $newForwarder;
         }
-      }
-      $newForwarder['count'] = count($newForwarder);
-      $this->parent->attrs['gosaMailForwardingAddress'] = $newForwarder;
     }
-  }
 
-  public function fixAttributesOnStore()
-  {
-    mailMethodCyrus::fixAttributesOnStore();
+    public function fixAttributesOnStore()
+    {
+        mailMethodCyrus::fixAttributesOnStore();
 
-    /* Add local user if checked */
-    $uattrib = $this->getUAttrib();
-    if (preg_match("/L/", $mailObject->gosaMailDeliveryMode)) {
-      if(!isset($this->parent->attrs['gosaMailForwardingAddress'])){
-        $this->parent->attrs['gosaMailForwardingAddress'] = array();
-      }
-      $this->parent->attrs['gosaMailForwardingAddress'][]= "\\".$this->parent->$uattrib;
+        /* Add local user if checked */
+        $uattrib = $this->getUAttrib();
+        if (preg_match("/L/", $mailObject->gosaMailDeliveryMode)) {
+            if (!isset($this->parent->attrs['gosaMailForwardingAddress'])) {
+                $this->parent->attrs['gosaMailForwardingAddress'] = array();
+            }
+            $this->parent->attrs['gosaMailForwardingAddress'][] = "\\" . $this->parent->$uattrib;
+        }
     }
-  }
-
 }
-
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>
