@@ -586,7 +586,7 @@ class mailgroup extends plugin
         $ldap->cd($this->dn);
         $ldap->modify($this->attrs);
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
         }
 
         new log("remove", "groups/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
@@ -823,7 +823,7 @@ class mailgroup extends plugin
         $this->cleanup();
         $ldap->modify($this->attrs);
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
         }
 
         if ($this->initially_was_account) {

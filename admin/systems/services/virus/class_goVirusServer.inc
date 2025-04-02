@@ -154,7 +154,7 @@ class govirusserver extends goService
         }
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
     }
 
@@ -229,7 +229,7 @@ class govirusserver extends goService
             "plCategory"    => array("server"),
             "plRequirements" => array(
                 'ldapSchema' => array('goVirusServer' => '>=2.7'),
-                'onFailureDisablePlugin' => array(get_class())
+                'onFailureDisablePlugin' => array(__CLASS__)
             ),
             "plProvidedAcls" => array(
 
