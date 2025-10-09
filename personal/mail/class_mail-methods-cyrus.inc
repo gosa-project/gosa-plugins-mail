@@ -439,7 +439,7 @@ class mailMethodCyrus extends mailMethod
                 __LINE__,
                 __FUNCTION__,
                 __FILE__,
-                trim(implode($result, ", "), ", "),
+                trim(implode(", ", $result), ", "),
                 "<b>IMAP: Received mailbox folders.</b>"
             );
             $this->error = imap_last_error();
@@ -592,7 +592,7 @@ class mailMethodCyrus extends mailMethod
             }
         }
         if (count($files)) {
-            $msg = sprintf(_("File '%s' does not exist!"), implode($files, ", "));
+            $msg = sprintf(_("File '%s' does not exist!"), implode(", ", $files));
             $msg .= "&nbsp;" . _("The sieve script may not be written correctly.");
             msg_dialog::display(_("Warning"), $msg, WARNING_DIALOG);
         }
