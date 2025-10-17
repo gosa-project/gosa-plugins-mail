@@ -97,6 +97,7 @@ class mailAccount extends plugin
     var $initial_uid    = "";
     var $mailDomainPart = "";
     var $mailDomainParts = array();
+    var $SpamLevels = NULL;
     var $MailBoxes = array("INBOX");
 
     /* Used LDAP attributes && classes */

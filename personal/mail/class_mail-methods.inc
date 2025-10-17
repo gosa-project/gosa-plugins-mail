@@ -72,6 +72,8 @@ class mailMethod
     protected $connected          = FALSE;
     protected $error              = "";
     protected $parent             = NULL;
+
+    protected $config             = NULL;
     protected $MailServer         = "";
 
     protected $default_acls = array("__anyone__" => "p", "__member__" => "lrswp");
@@ -237,8 +239,8 @@ class mailMethod
             $this->parent->attrs['gosaSharedFolderTarget'] = array();
         }
         foreach ($this->attributes as $source => $dest) {
-            $this->attrs[$dest]   = array();
-            $this->attrs[$source] = array();
+            $this->parent->attrs[$dest]   = array();
+            $this->parent->attrs[$source] = array();
         }
     }
 
