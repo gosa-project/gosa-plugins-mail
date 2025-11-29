@@ -1,5 +1,7 @@
 <?php
 
+use GosaSystems\admin\systems\services\GoService as goService;
+
 class goImapServer extends goService
 {
 

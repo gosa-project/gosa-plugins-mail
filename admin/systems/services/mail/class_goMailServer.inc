@@ -1,5 +1,7 @@
 <?php
 
+use GosaSystems\admin\systems\services\GoService as goService;
+
 class goMailServer extends goService{
 
     var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports mailqueue listings and so on.";
