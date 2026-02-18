@@ -1,5 +1,7 @@
 <?php
 
+use GosaSystems\admin\systems\services\GoService as goService;
+
 class goMailServer extends goService{
 
     var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports mailqueue listings and so on.";
@@ -530,7 +532,7 @@ class goMailServer extends goService{
             $ldap->add($this->attrs);
         }
         if (!$ldap->success()){
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
 
         if($this->initially_was_account){
@@ -590,7 +592,7 @@ class goMailServer extends goService{
                     "plCategory"    => array("server"),
                     "plRequirements"=> array(
                         'ldapSchema' => array('goMailServer' => '>=2.7'),
-                        'onFailureDisablePlugin' => array(get_class())
+                        'onFailureDisablePlugin' => array(__CLASS__)
                         ),
 
                     "plProperties"  => array(
@@ -642,5 +644,3 @@ class goMailServer extends goService{
                             ));
     }
 }
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>
