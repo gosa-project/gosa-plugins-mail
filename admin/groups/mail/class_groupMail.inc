@@ -31,6 +31,10 @@ class mailgroup extends plugin
     var $remove_folder_from_imap    = true;
     var $view_logged                = FALSE;
     var $mailDomainPart             = "";
+    var $mailMethod                 = NULL;
+    var $mailDomainParts            = array();
+    var $AvailableFolderTypes       = array();
+    var $MailBoxes                  = array();
 
     /* attribute list for save action */
     var $attributes = array(

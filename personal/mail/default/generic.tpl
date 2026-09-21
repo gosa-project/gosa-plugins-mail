@@ -177,9 +177,7 @@
             <b><label for="gosaVacationMessage">{t}Vacation message{/t}</label></b>
             <div class="input-field textarea-multiple">
                <textarea {if $own_script !="" } disabled {/if} id="gosaVacationMessage" class="materialize-textarea multiple"
-                  name="gosaVacationMessage">
-                  {$gosaVacationMessage}
-               </textarea>
+                  name="gosaVacationMessage">{$gosaVacationMessage}</textarea>
             </div>
             {/render}
 
